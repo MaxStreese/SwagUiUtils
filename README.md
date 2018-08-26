@@ -13,8 +13,8 @@ further draws heavy inspiration from
 [here](https://github.com/haxii/go-swagger-ui) (so heavy in fact that you could
 argue plagiarism :sweat_smile:).
 
-I intend to implement convenience functions for using the handler with at least
-the Echo framework in the future.
+I intend to implement convenience functions for at least the Echo framework in 
+the future.
 
 In case someone besides me ever uses this and wants to have the ui updated just
 drop me a line and I will do the update.
