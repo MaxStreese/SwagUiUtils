@@ -1,20 +1,24 @@
-# Swagger UI Handler
+# Swag UI Utils
 
-Swagger UI Handler is just what the name implies: An `http.Handler` serving the 
-Swagger UI.
+At the core of Swag UI Utils is the *swaguihandler* package which implements a
+`http.Handler` that serves the 
+[Swagger UI](https://swagger.io/tools/swagger-ui/).
 
-The package is intended to be used in Go services which need to serve their own
-OpenApi documentation. You can however also setup your own Swagger UI server
-with it as demonstrated by the server command in this repository.
+The *swaguihandler* package in turn relies on the *swaguidist* package which
+contains the static files from the 
+[Swagger UI dist](https://github.com/swagger-api/swagger-ui/tree/master/dist**.
+The index.html file has been put into a Go constant which is used to create a
+html template. All other files have been transformed to byte slices using the
+*xxd* utility with the *-i* flag.
 
-The Swagger UI resources are simply copied from 
-[here](https://github.com/swagger-api/swagger-ui/tree/master/dist). The repo
-further draws heavy inspiration from 
-[here](https://github.com/haxii/go-swagger-ui) (so heavy in fact that you could
-argue plagiarism :sweat_smile:).
+The idea for the *swaguidist* and *swaguihandler* packages is taken from the
+[go-swagger-ui repository](https://github.com/haxii/go-swagger-ui) so all credit
+regarding the byte slice idea goes to that repository.
 
-I intend to implement convenience functions for using the handler with at least
-the Echo framework in the future.
-
-In case someone besides me ever uses this and wants to have the ui updated just
-drop me a line and I will do the update.
+I created this repository because I wanted to have more flexibility in serving
+the UI than what the above repository offers. With this package you are able to
+let your Go service serve its own OpenApi documentation via the handler or use 
+the *swaguiserver* to have a standalone Swagger UI server or build your own.
+Because the `SwagUiHandler` type inside *swaguihandler* implements 
+`http.Handler` using the handler with frameworks like 
+[Echo](https://github.com/labstack/echo) is straight forward.
