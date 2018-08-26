@@ -13,7 +13,7 @@ html template. All other files have been transformed to byte slices using the
 
 The idea for the *swaguidist* and *swaguihandler* packages is taken from the
 [go-swagger-ui](https://github.com/haxii/go-swagger-ui) repository so all credit
-regarding the byte slice idea goes to that repository.
+regarding the byte slice idea and more goes to that repository.
 
 I created this repository because I wanted to have more flexibility in serving
 the UI than what the above repository offers. With this package you are able to
