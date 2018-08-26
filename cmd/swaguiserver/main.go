@@ -1,15 +1,15 @@
 package main
 
 import (
-	"net/http"
+	"github.com/labstack/echo"
 	"github.com/maxstreese/swaguiutils/pkg/swaguihandler"
 )
 
 func main() {
-	openApiDocUrl := "https://petstore.swagger.io/v2/swagger.json"
-	swagUiHandler := swaguihandler.New(openApiDocUrl, false)
+	swagUiHandler := swaguihandler.New(
+		"https://petstore.swagger.io/v2/swagger.json", false)
 
-	http.Handle("/api/", swagUiHandler)
-
-	http.ListenAndServe(":8080", nil)
+	e := echo.New()
+	e.GET("/*", swagUiHandler.ServeEcho)
+	e.Start(":8080")
 }
