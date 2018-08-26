@@ -12,7 +12,7 @@ html template. All other files have been transformed to byte slices using the
 *xxd* utility with the *-i* flag.
 
 The idea for the *swaguidist* and *swaguihandler* packages is taken from the
-[go-swagger-ui repository](https://github.com/haxii/go-swagger-ui) so all credit
+[go-swagger-ui](https://github.com/haxii/go-swagger-ui) repository so all credit
 regarding the byte slice idea goes to that repository.
 
 I created this repository because I wanted to have more flexibility in serving
