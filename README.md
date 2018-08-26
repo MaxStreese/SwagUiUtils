@@ -6,7 +6,7 @@ At the core of Swag UI Utils is the *swaguihandler* package which implements a
 
 The *swaguihandler* package in turn relies on the *swaguidist* package which
 contains the static files from the 
-[Swagger UI dist](https://github.com/swagger-api/swagger-ui/tree/master/dist**.
+[Swagger UI dist](https://github.com/swagger-api/swagger-ui/tree/master/dist).
 The index.html file has been put into a Go constant which is used to create a
 html template. All other files have been transformed to byte slices using the
 *xxd* utility with the *-i* flag.
