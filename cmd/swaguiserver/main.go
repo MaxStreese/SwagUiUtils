@@ -5,39 +5,45 @@ import (
 	"github.com/maxstreese/swaguiutils/pkg/swaguihandler"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	// "github.com/ogier/pflag"
+	"strings"
 )
 
-type Settings struct {
-	addr        *string
-	docUrl      *string
-	hideTopebar *bool
-}
+const (
+	SettingNameAddr       = "addr"
+	SettingNameDocUrl     = "doc.url"
+	SettingNameHideTopbar = "hide.topbar"
+)
 
 func main() {
-	settings := newSettings()
-	rootCmd := newRootCmd(settings)
+	configureViper()
+	rootCmd := newRootCmd()
 	rootCmd.Execute()
 }
 
-func newSettings() Settings {
-	return Settings{new(string), new(string), new(bool)}
+func configureViper() {
+	viper.SetConfigName("settings")
+	viper.AddConfigPath(".")
+	viper.ReadInConfig()
+
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	viper.SetEnvPrefix("goswagui")
+	viper.AutomaticEnv()
 }
 
-func newRootCmd(s Settings) *cobra.Command {
+func newRootCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "swaguiserver",
 		Short: "SwagUiServer is a server that serves the Swagger UI",
 		Run: func(cmd *cobra.Command, args []string) {
-			runRootCmd(cmd, args, s)
+			runRootCmd(cmd, args)
 		},
 	}
 
-	cmd.Flags().StringVar(s.addr, "addr", ":8080",
+	cmd.Flags().String("addr", ":8080",
 		"the address of the service")
-	cmd.Flags().StringVar(s.docUrl, "doc-url", "",
+	cmd.Flags().String("doc.url", "",
 		"url to the open api document that should be shown be default")
-	cmd.Flags().BoolVar(s.hideTopebar, "hide-topbar", false,
+	cmd.Flags().Bool("hide.topbar", false,
 		"disable the topbar of the Swagger UI")
 
 	viper.BindPFlags(cmd.Flags())
@@ -45,10 +51,14 @@ func newRootCmd(s Settings) *cobra.Command {
 	return cmd
 }
 
-func runRootCmd(cmd *cobra.Command, args []string, s Settings) {
-	swagUiHandler := swaguihandler.New(*s.docUrl, *s.hideTopebar)
+func runRootCmd(cmd *cobra.Command, args []string) {
+	addr := viper.GetString(SettingNameAddr)
+	docUrl := viper.GetString(SettingNameDocUrl)
+	hideTopbar := viper.GetBool(SettingNameHideTopbar)
+
+	swagUiHandler := swaguihandler.New(docUrl, hideTopbar)
 
 	e := echo.New()
 	e.GET("/*", swagUiHandler.ServeEcho)
-	e.Start(*s.addr)
+	e.Start(addr)
 }
