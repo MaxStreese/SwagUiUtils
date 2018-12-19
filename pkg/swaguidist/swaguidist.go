@@ -32,10 +32,10 @@ func ExecuteIndexHtml(w io.Writer, docUrl string, hideTopbar bool) error {
 
 	config := struct {
 		DocUrl  string
-		Plugins string
+		Plugins template.JS
 	}{
 		DocUrl:  docUrl,
-		Plugins: plugins,
+		Plugins: template.JS(plugins),
 	}
 
 	return indexHtmlTemplate.Execute(w, config)

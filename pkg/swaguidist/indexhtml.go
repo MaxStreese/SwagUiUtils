@@ -39,9 +39,15 @@ const indexHtml = `
     <script src="./swagger-ui-bundle.js"> </script>
     <script src="./swagger-ui-standalone-preset.js"> </script>
     <script>
-    window.onload = function() {
+    function HideTopbarPlugin() {
+      return {
+        components: {
+          Topbar: function() { return null }
+        }
+      }
+    }
 
-      // Build a system
+    window.onload = function() {
       const ui = SwaggerUIBundle({
         url: "{{.DocUrl}}",
         dom_id: '#swagger-ui',
@@ -55,7 +61,7 @@ const indexHtml = `
         ],
         layout: "StandaloneLayout"
       })
-
+      
       window.ui = ui
     }
   </script>
