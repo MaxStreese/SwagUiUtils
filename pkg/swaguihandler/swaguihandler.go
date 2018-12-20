@@ -1,9 +1,19 @@
 package swaguihandler
 
 import (
+	"fmt"
 	"github.com/maxstreese/swaguiutils/pkg/swaguidist"
 	"strings"
 )
+
+var Paths []string
+
+func init() {
+	Paths = append(Paths, "/")
+	for k, _ := range swaguidist.StaticFiles {
+		Paths = append(Paths, fmt.Sprintf("/%s", k))
+	}
+}
 
 type SwagUiHandler struct {
 	docUrl     string

@@ -59,6 +59,10 @@ func runRootCmd(cmd *cobra.Command, args []string) {
 	swagUiHandler := swaguihandler.New(docUrl, hideTopbar)
 
 	e := echo.New()
-	e.GET("/*", swagUiHandler.ServeEcho)
+
+	for _, path := range swaguihandler.Paths {
+		e.GET(path, swagUiHandler.ServeEcho)
+	}
+
 	e.Start(addr)
 }
