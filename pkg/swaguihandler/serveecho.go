@@ -15,3 +15,9 @@ func (h SwagUiHandler) ServeEcho(c echo.Context) error {
 
 	return nil
 }
+
+func (h SwagUiHandler) WireUpPaths(e *echo.Echo) {
+	for _, path := range Paths {
+		e.GET(path, h.ServeEcho)
+	}
+}
