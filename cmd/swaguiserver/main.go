@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"github.com/maxstreese/swaguiutils/pkg/swaguihandler"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
